@@ -1,11 +1,10 @@
 @media all and (min-width: 480px) {
-    .Settings {
+    .Signup {
         padding: 60px 0;
-        margin: 0 auto;
-        max-width: 480px;
     }
 
-    .Settings>.LoaderButton:first-child {
-        margin-bottom: 15px;
+    .Signup form {
+        margin: 0 auto;
+        max-width: 320px;
     }
 }
