@@ -6,7 +6,6 @@ import "./Home.css";
 import { API } from "aws-amplify";
 import { BsPencilSquare } from "react-icons/bs";
 import { LinkContainer } from "react-router-bootstrap";
-
 export default function Home() {
     const [notes, setNotes] = useState([]);
     const { isAuthenticated } = useAppContext();
@@ -27,8 +26,10 @@ export default function Home() {
         onLoad();
     }, [isAuthenticated]);
     function loadNotes() {
-        return API.get("notes", "/invalid_path");
-    } function renderNotesList(notes) {
+        return API.get("notes", "/notes");
+    }
+
+    function renderNotesList(notes) {
         return (
             <>
                 <LinkContainer to="/notes/new">
