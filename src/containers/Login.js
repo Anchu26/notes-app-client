@@ -8,6 +8,7 @@ import { onError } from "../libs/errorLib";
 import { useNavigate } from 'react-router-dom';
 import "./Login.css";
 import { Link } from "react-router-dom";
+import FacebookButton from "../components/FacebookButton";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -17,9 +18,11 @@ export default function Login() {
         email: "",
         password: ""
     });
+
     function validateForm() {
         return fields.email.length > 0 && fields.password.length > 0;
     }
+
     async function handleSubmit(event) {
         event.preventDefault();
         setIsLoading(true);
@@ -32,6 +35,11 @@ export default function Login() {
             setIsLoading(false);
         }
     }
+
+    const handleFbLogin = () => {
+        userHasAuthenticated(true);
+    };
+
     return (
         <div className="Login">
             <Form onSubmit={handleSubmit}>
@@ -62,6 +70,7 @@ export default function Login() {
                 >
                     Login
                 </LoaderButton>
+                <FacebookButton onLogin={handleFbLogin} />
             </Form>
         </div>
     );

@@ -8,17 +8,20 @@ import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import "./Signup.css";
 import { Auth } from "aws-amplify";
+import FacebookButton from "../components/FacebookButton";
+
 export default function Signup() {
     const [fields, handleFieldChange] = useFormFields({
         email: "",
         password: "",
         confirmPassword: "",
-        confirmationCode: "",
+        confirmationCode: ""
     });
     const navigate = useNavigate();
     const [newUser, setNewUser] = useState(null);
     const { userHasAuthenticated } = useAppContext();
     const [isLoading, setIsLoading] = useState(false);
+
     function validateForm() {
         return (
             fields.email.length > 0 &&
@@ -26,16 +29,18 @@ export default function Signup() {
             fields.password === fields.confirmPassword
         );
     }
+
     function validateConfirmationForm() {
         return fields.confirmationCode.length > 0;
     }
+
     async function handleSubmit(event) {
         event.preventDefault();
         setIsLoading(true);
         try {
             const newUser = await Auth.signUp({
                 username: fields.email,
-                password: fields.password,
+                password: fields.password
             });
             setIsLoading(false);
             setNewUser(newUser);
@@ -44,6 +49,7 @@ export default function Signup() {
             setIsLoading(false);
         }
     }
+
     async function handleConfirmationSubmit(event) {
         event.preventDefault();
         setIsLoading(true);
@@ -58,6 +64,20 @@ export default function Signup() {
         }
     }
 
+    async function handleFbLogin() {
+        setIsLoading(true);
+        try {
+            const response = await Auth.federatedSignIn({ provider: "Facebook" });
+            setIsLoading(false);
+            userHasAuthenticated(true);
+            navigate("/");
+        } catch (e) {
+            onError(e);
+            setIsLoading(false);
+        }
+    }
+
+
     function renderConfirmationForm() {
         return (
             <Form onSubmit={handleConfirmationSubmit}>
@@ -69,7 +89,9 @@ export default function Signup() {
                         onChange={handleFieldChange}
                         value={fields.confirmationCode}
                     />
-                    <Form.Text muted>Please check your email for the code.</Form.Text>
+                    <Form.Text muted>
+                        Please check your email for the code.
+                    </Form.Text>
                 </Form.Group>
                 <LoaderButton
                     block
@@ -84,6 +106,7 @@ export default function Signup() {
             </Form>
         );
     }
+
     function renderForm() {
         return (
             <Form onSubmit={handleSubmit}>
@@ -122,9 +145,11 @@ export default function Signup() {
                 >
                     Signup
                 </LoaderButton>
+                <FacebookButton onLogin={handleFbLogin} />
             </Form>
         );
     }
+
     return (
         <div className="Signup">
             {newUser === null ? renderForm() : renderConfirmationForm()}
