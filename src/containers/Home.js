@@ -28,6 +28,7 @@ export default function Home() {
     function loadNotes() {
         return API.get("notes", "/notes");
     }
+
     function renderNotesList(notes) {
         return (
             <>
@@ -64,7 +65,7 @@ export default function Home() {
     function renderNotes() {
         return (
             <div className="notes">
-                <h2 className="pb-3 mt-4 mb-3 border-bottom">Your Notes</h2>
+                <h2 className="pb-3 mt-4 mb-3 border-bottom"><i class="material-icons">&#xe8cd;</i> Your Notes</h2>
                 <ListGroup>{!isLoading && renderNotesList(notes)}</ListGroup>
             </div>
         );
