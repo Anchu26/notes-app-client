@@ -6,7 +6,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   font-family: "Open Sans", sans-serif;
-  background-image: url("D:\project\notes-app-client\src\Notes-1200x900.webp");
+  background-image: url("./Notes-1200x900.webp");
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
